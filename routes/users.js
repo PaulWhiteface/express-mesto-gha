@@ -30,7 +30,7 @@ router.patch('/users/me', celebrate({
 }), updateUser);
 router.patch('/users/me/avatar', celebrate({
   body: Joi.string().keys({
-    avatar: Joi().string().required().custom(validationUrl),
+    avatar: Joi.string().required().custom(validationUrl),
   }),
 }), updateAvatar);
 
