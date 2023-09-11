@@ -16,9 +16,9 @@ module.exports.createCard = (req, res, next) => {
     .then((card) => res.status(201).send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        next(new BadRequestError('Ошибка, поля некорректно заполнены'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -37,9 +37,9 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Некорректные данные'));
+        next(new BadRequestError('Некорректные данные'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -57,9 +57,9 @@ module.exports.likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Некорректные данные'));
+        next(new BadRequestError('Некорректные данные'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -77,8 +77,8 @@ module.exports.dislikeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Некорректные данные для удаления лайка'));
+        next(new BadRequestError('Некорректные данные для удаления лайка'));
       }
-      return next(err);
+      next(err);
     });
 };

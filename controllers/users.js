@@ -32,9 +32,9 @@ module.exports.getUserById = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -48,9 +48,9 @@ module.exports.getActiveUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError('Переданы некорректные данные'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -72,12 +72,12 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.code === 11000) {
-        return next(new ConflictError('Такой Email уже используется'));
+        next(new ConflictError('Такой Email уже используется'));
       }
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        next(new BadRequestError('Ошибка, поля некорректно заполнены'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -94,9 +94,9 @@ module.exports.updateUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        next(new BadRequestError('Ошибка, поля некорректно заполнены'));
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -113,8 +113,8 @@ module.exports.updateAvatar = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        next(new BadRequestError('Ошибка, поля некорректно заполнены'));
       }
-      return next(err);
+      next(err);
     });
 };
