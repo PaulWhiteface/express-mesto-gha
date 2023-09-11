@@ -29,7 +29,7 @@ router.patch('/users/me', celebrate({
   }),
 }), updateUser);
 router.patch('/users/me/avatar', celebrate({
-  body: Joi.string().keys({
+  body: Joi.object().keys({
     avatar: Joi.string().required().custom(validationUrl),
   }),
 }), updateAvatar);
