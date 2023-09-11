@@ -16,7 +16,6 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(errors());
 app.use(auth);
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
@@ -40,6 +39,8 @@ app.post('/signup', celebrate({
 app.use('*', (req, res) => {
   res.status(404).send({ message: 'Ошибка пути' });
 });
+
+app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
