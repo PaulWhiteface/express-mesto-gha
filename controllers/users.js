@@ -73,9 +73,11 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError('Такой Email уже используется'));
+        return;
       }
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        return;
       }
       next(err);
     });
@@ -95,6 +97,7 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        return;
       }
       next(err);
     });
@@ -114,6 +117,7 @@ module.exports.updateAvatar = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Ошибка, поля некорректно заполнены'));
+        return;
       }
       next(err);
     });
