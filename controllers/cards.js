@@ -28,7 +28,7 @@ module.exports.deleteCard = (req, res, next) => {
   Card.findByIdAndRemove({ owner: req.user._id, _id: cardId })
     .then((card) => {
       if (!card) {
-        throw new BadRequestError('Карточка не найдена');
+        throw new NotFoundError('Карточка не найдена');
       }
       if (card.owner.toString() === req.user._id) {
         res.status(200).send(card);
@@ -76,7 +76,6 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
-      card.remove();
       res.status(200).send(card);
     })
     .catch((err) => {
