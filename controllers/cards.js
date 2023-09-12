@@ -25,24 +25,28 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  Card.findByIdAndRemove({ owner: req.user._id, _id: cardId })
+  Card.findById({ _id: cardId })
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
       if (card.owner.toString() === req.user._id) {
-        res.status(200).send(card);
+        Card.findByIdAndRemove(cardId)
+          .then((item) => {
+            res.status(200).send(item);
+          })
+          .catch((err) => {
+            if (err.name === 'CastError') {
+              next(new BadRequestError('Некорректные данные'));
+              return;
+            }
+            next(err);
+          });
       } else {
         throw new ForbiddenError('Нет прав на удаление этой карточки');
       }
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Некорректные данные'));
-        return;
-      }
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.likeCard = (req, res, next) => {

@@ -7,6 +7,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const BadRequestError = require('./errors/bad-request-400');
+const NotFoundError = require('./errors/not-found-error-404');
 
 const { PORT = 3000, DB_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
@@ -46,8 +47,8 @@ app.use(auth);
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
 
-app.use('*', (req, res) => {
-  res.status(404).send({ message: 'Ошибка пути' });
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('Ошибка пути'));
 });
 
 app.use(errors());
